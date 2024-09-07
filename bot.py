@@ -82,7 +82,7 @@ async def check_reports():
                 embed = Embed(title=f"Найден новый отчет! ID: {report_disclose_id}",
                               description=f"**Заголовок**: {data['name']}\n**Ссылка**: https://bugbounty.standoff365.com/disclosed-reports/{report_disclose_id}",
                               color=0x00ff00,
-                              timestamp=datetime.utcnow())  # Добавляем отметку времени
+                              timestamp=datetime.now())  # Добавляем отметку времени
                 embed.add_field(name="Критичность", value=data['severity'])
                 embed.add_field(name="Статус", value=data['status'])
                 embed.add_field(name="Сумма", value=f"{data['amount']} {data['currency']}")
