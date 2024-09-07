@@ -53,7 +53,8 @@ async def update_status_embed(report_disclose_id, status_message_text):
         # Создаем embed для состояния
         embed = Embed(title="Статус проверки отчетов",
                       description=f"Проверка отчета с ID {report_disclose_id}",
-                      color=0x3498db)
+                      color=0x3498db,
+                      timestamp=datetime.utcnow())  # Добавляем отметку времени
         embed.add_field(name="Текущее состояние", value=status_message_text, inline=False)
         embed.set_footer(text="Статус обновляется каждые 30 секунд")
 
@@ -79,7 +80,8 @@ async def check_reports():
                 # Создаем embed-сообщение для отчета
                 embed = Embed(title=f"Найден новый отчет! ID: {report_disclose_id}",
                               description=f"**Заголовок**: {data['name']}\n**Ссылка**: https://bugbounty.standoff365.com/disclosed-reports/{report_disclose_id}",
-                              color=0x00ff00)
+                              color=0x00ff00,
+                              timestamp=datetime.utcnow())  # Добавляем отметку времени
                 embed.add_field(name="Критичность", value=data['severity'])
                 embed.add_field(name="Статус", value=data['status'])
                 embed.add_field(name="Сумма", value=f"{data['amount']} {data['currency']}")
