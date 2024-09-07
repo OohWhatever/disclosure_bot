@@ -6,8 +6,8 @@ from discord import Embed
 
 # Токен вашего бота и ID каналов
 DISCORD_BOT_TOKEN = ''
-DISCORD_CHANNEL_ID = 1  # ID канала для отчетов
-DISCORD_STATUS_CHANNEL_ID = 2  # ID канала для состояния
+DISCORD_CHANNEL_ID = 1280593565571092552  # ID канала для отчетов
+DISCORD_STATUS_CHANNEL_ID = 1282081789367554260  # ID канала для состояния
 DISCL_URL = 'https://bugbounty.standoff365.com/disclosed-reports/'
 
 # Функция для получения данных из API
