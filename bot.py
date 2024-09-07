@@ -45,17 +45,24 @@ async def on_ready():
     await check_reports()
 
 # Функция для отправки или обновления сообщения о состоянии
-async def update_status_message(report_disclose_id, status_message_text):
+async def update_status_embed(report_disclose_id, status_message_text):
     global status_message
     status_channel = client.get_channel(DISCORD_STATUS_CHANNEL_ID)
 
     if status_channel:
-        # Если сообщение еще не создано, создаем новое
+        # Создаем embed для состояния
+        embed = Embed(title="Статус проверки отчетов",
+                      description=f"Проверка отчета с ID {report_disclose_id}",
+                      color=0x3498db)
+        embed.add_field(name="Текущее состояние", value=status_message_text, inline=False)
+        embed.set_footer(text="Статус обновляется каждые 30 секунд")
+
+        # Если сообщение еще не создано, создаем новое embed-сообщение
         if status_message is None:
-            status_message = await status_channel.send(f"Проверка отчета с ID {report_disclose_id}: {status_message_text}")
+            status_message = await status_channel.send(embed=embed)
         else:
             # Если сообщение уже создано, редактируем его
-            await status_message.edit(content=f"Проверка отчета с ID {report_disclose_id}: {status_message_text}")
+            await status_message.edit(embed=embed)
     else:
         print("Не удалось найти канал для статусов.")
 
@@ -83,20 +90,20 @@ async def check_reports():
                 if report_channel:
                     await report_channel.send(embed=embed)
 
-                # Обновляем сообщение о состоянии
-                await update_status_message(report_disclose_id, "Найден новый отчет и отправлен в канал.")
+                # Обновляем embed-сообщение о состоянии
+                await update_status_embed(report_disclose_id, "Найден новый отчет и отправлен в канал.")
 
                 # Увеличиваем ID на единицу и записываем в файл
                 report_disclose_id += 1
                 write_current_id(file_path, report_disclose_id)
             else:
-                await update_status_message(report_disclose_id, "Неожиданный формат ответа.")
+                await update_status_embed(report_disclose_id, "Неожиданный формат ответа.")
                 print(f"Неожиданный формат ответа для ID {report_disclose_id}")
         elif response.status_code == 404:
-            await update_status_message(report_disclose_id, "Отчет не найден.")
+            await update_status_embed(report_disclose_id, "Отчет не найден.")
             print(f"Report ID {report_disclose_id} не найден. Проверяем снова через 30 секунд.")
         else:
-            await update_status_message(report_disclose_id, f"Ошибка {response.status_code}.")
+            await update_status_embed(report_disclose_id, f"Ошибка {response.status_code}.")
             print(f"Ошибка при запросе ID {report_disclose_id}: {response.status_code}")
 
         # Ожидание 30 секунд перед следующим запросом
