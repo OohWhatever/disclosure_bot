@@ -55,7 +55,7 @@ async def update_status_embed(report_disclose_id, status_message_text):
         embed = Embed(title="Статус проверки отчетов",
                       description=f"Проверка отчета с ID {report_disclose_id}",
                       color=0x3498db,
-                      timestamp=datetime.now()  # Добавляем отметку времени
+                      timestamp=datetime.now())  # Добавляем отметку времени
         embed.add_field(name="Текущее состояние", value=status_message_text, inline=False)
         embed.set_footer(text="Статус обновляется каждые 30 секунд")
 
