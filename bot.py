@@ -3,6 +3,7 @@ import requests
 import json
 import asyncio
 from discord import Embed
+from datetime import datetime
 
 # Токен вашего бота и ID каналов
 DISCORD_BOT_TOKEN = ''
